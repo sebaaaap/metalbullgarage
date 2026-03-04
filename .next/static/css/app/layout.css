@@ -907,9 +907,6 @@ video {
 .bottom-0 {
   bottom: 0px;
 }
-.bottom-3 {
-  bottom: 0.75rem;
-}
 .bottom-8 {
   bottom: 2rem;
 }
@@ -2409,9 +2406,6 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-}
-.text-white\/20 {
-  color: rgb(255 255 255 / 0.2);
 }
 .text-yellow-400 {
   --tw-text-opacity: 1;
