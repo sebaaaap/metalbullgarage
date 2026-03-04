@@ -99,7 +99,7 @@ export default function Footer() {
                 </div>
                 <div>
                   <p className="text-sm font-heading text-white mb-1 uppercase tracking-wider">Dirección</p>
-                  <p className="text-gray-500 text-sm">Calle Mecánica #123, Ciudad del Motor</p>
+                  <p className="text-gray-500 text-sm">Santa Luisa 173, Quilicura, Región Metropolitana</p>
                 </div>
               </li>
               <li className="flex gap-4">

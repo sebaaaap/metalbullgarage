@@ -1,8 +1,9 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { Shield, Award, Clock, Users, CheckCircle } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
+import Image from "next/image";
 
 const Counter = ({ value, label }: { value: string, label: string }) => {
   const [count, setCount] = useState(0);
@@ -65,26 +66,42 @@ const features = [
 ];
 
 export default function About() {
+  const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
+
   return (
     <section
       id="nosotros"
-      className="py-24 relative overflow-hidden"
-      style={{ background: "hsl(0,0%,6%)" }}
+      ref={sectionRef}
+      className="py-24 relative overflow-hidden flex items-center min-h-[600px]"
     >
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-[0.04]">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 30px, hsl(0,72%,51%) 30px, hsl(0,72%,51%) 31px)`,
-          }}
+      {/* Parallax Background Image */}
+      <motion.div
+        style={{ y }}
+        className="absolute inset-0 z-0 h-[140%] -top-[20%]"
+      >
+        <Image
+          src="/hero-garage.jpg"
+          alt="Metal Bulls Garage"
+          fill
+          className="object-cover object-center opacity-100"
+          quality={100}
+          priority
         />
-      </div>
+        {/* Minimal gradient for text legibility */}
+        <div className="absolute inset-0 bg-black/40 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10" />
+      </motion.div>
 
       {/* Left red accent bar */}
-      <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-red-600/60 to-transparent" />
+      <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-red-600/60 to-transparent z-20" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-30">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left: Content */}
           <motion.div

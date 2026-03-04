@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useMotionTemplate, useSpring } from "framer-motion";
 import {
   Droplets,
   Truck,
@@ -18,6 +18,7 @@ import {
   CheckCircle,
   ChevronRight
 } from "lucide-react";
+import { useRef } from "react";
 
 const services = [
   {
@@ -106,6 +107,79 @@ const services = [
   },
 ];
 
+function ServiceCard({ service, index }: { service: typeof services[0]; index: number }) {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Add smoothing to the light movement
+  const springX = useSpring(mouseX, { damping: 30, stiffness: 200 });
+  const springY = useSpring(mouseY, { damping: 30, stiffness: 200 });
+
+  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
+  function handleTouchMove({ currentTarget, touches }: React.TouchEvent) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(touches[0].clientX - left);
+    mouseY.set(touches[0].clientY - top);
+  }
+
+  const background = useMotionTemplate`
+    radial-gradient(
+      350px circle at ${springX}px ${springY}px,
+      rgba(220, 38, 38, 0.35),
+      transparent 80%
+    )
+  `;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="group relative"
+    >
+      <div
+        className="relative bg-[hsl(0,0%,7%)] border border-white/10 rounded-xl p-8 h-full transition-all duration-400 hover:border-red-600/60 overflow-hidden cursor-default shadow-lg hover:-translate-y-1"
+        onMouseMove={handleMouseMove}
+        onTouchMove={handleTouchMove}
+      >
+        {/* Spotlight Follower */}
+        <motion.div
+          className="pointer-events-none absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
+          style={{ background }}
+        />
+
+        {/* Background Icon Symbol */}
+        <div className="absolute -bottom-6 -right-6 opacity-[0.03] group-hover:opacity-[0.08] group-hover:scale-110 transition-all duration-700 pointer-events-none">
+          <service.icon className="w-44 h-44 -rotate-12 text-red-600" />
+        </div>
+
+        {/* Content */}
+        <div className="relative z-10">
+          <h3 className="font-heading text-xl text-white mb-3 group-hover:text-red-400 transition-colors duration-300">
+            {service.title}
+          </h3>
+          <p className="text-gray-400/80 text-sm leading-relaxed mb-8">{service.description}</p>
+
+          {/* Highlight tag */}
+          <div className="flex items-center gap-1.5 text-xs text-red-500/80 font-heading tracking-wider uppercase font-medium">
+            <span className="w-1.5 h-1.5 bg-red-600 rounded-full mr-1" />
+            {service.highlight}
+          </div>
+        </div>
+
+        {/* Bottom hover line */}
+        <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-gradient-to-r from-red-600 to-red-400 group-hover:w-full transition-all duration-500" />
+      </div>
+    </motion.div>
+  );
+}
+
 export default function Services() {
   return (
     <section id="servicios" className="py-24 relative overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(0,0%,4%) 0%, hsl(0,0%,6%) 100%)" }}>
@@ -143,72 +217,71 @@ export default function Services() {
         {/* Services Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => (
-            <motion.div
-              key={service.title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative"
-            >
-              <div
-                className="relative bg-[hsl(0,0%,7%)] border border-white/10 rounded-xl p-8 h-full transition-all duration-400 hover:border-red-600/50 overflow-hidden cursor-default shadow-lg"
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = "0 0 40px rgba(220,38,38,0.15), inset 0 0 40px rgba(220,38,38,0.03)";
-                  e.currentTarget.style.transform = "translateY(-4px)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = "none";
-                  e.currentTarget.style.transform = "translateY(0)";
-                }}
-              >
-                {/* Corner accent */}
-                <div className="absolute top-0 right-0 w-16 h-16 overflow-hidden rounded-xl">
-                  <div className="absolute -top-8 -right-8 w-16 h-16 bg-red-600/10 rotate-45 group-hover:bg-red-600/20 transition-colors duration-400" />
-                </div>
-
-                {/* Content */}
-                <h3 className="font-heading text-xl text-white mb-3 group-hover:text-red-400 transition-colors duration-300">
-                  {service.title}
-                </h3>
-                <p className="text-gray-400/80 text-sm leading-relaxed mb-6">{service.description}</p>
-
-                {/* Highlight tag */}
-                <div className="flex items-center gap-1.5 text-xs text-red-500/80 font-heading tracking-wider uppercase font-medium">
-                  <span className="w-1.5 h-1.5 bg-red-600 rounded-full mr-1" />
-                  {service.highlight}
-                </div>
-
-                {/* Bottom hover line */}
-                <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-gradient-to-r from-red-600 to-red-400 group-hover:w-full transition-all duration-500" />
-              </div>
-            </motion.div>
+            <ServiceCard key={service.title} service={service} index={index} />
           ))}
         </div>
 
         {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-16 bg-gradient-to-r from-red-600/10 to-transparent border border-red-600/20 rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden"
-        >
-          <div className="relative z-10">
-            <h4 className="font-heading text-2xl sm:text-3xl text-white mb-4">¿BUSCAS UN CONVENIO PARA TU EMPRESA?</h4>
-            <p className="text-gray-400 mb-8 max-w-xl mx-auto">Mantenemos tu flota comercial siempre lista. Consulta por nuestros planes especiales para PYMES y empresas con atención prioritaria.</p>
-            <a
-              href="#contacto"
-              className="inline-flex items-center gap-3 font-heading text-sm px-10 py-4 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-all duration-300 tracking-widest hover:shadow-[0_10px_30px_rgba(220,38,38,0.4)]"
-            >
-              COTIZAR FLOTILLA
-              <ChevronRight className="w-5 h-5" />
-            </a>
-          </div>
-          {/* Decorative background circle */}
-          <div className="absolute top-1/2 left-0 -translate-y-1/2 w-64 h-64 bg-red-600/10 blur-[100px] rounded-full" />
-        </motion.div>
+        <BottomCTA />
       </div>
     </section>
+  );
+}
+
+function BottomCTA() {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springX = useSpring(mouseX, { damping: 30, stiffness: 200 });
+  const springY = useSpring(mouseY, { damping: 30, stiffness: 200 });
+
+  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
+  function handleTouchMove({ currentTarget, touches }: React.TouchEvent) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(touches[0].clientX - left);
+    mouseY.set(touches[0].clientY - top);
+  }
+
+  const background = useMotionTemplate`
+    radial-gradient(
+      600px circle at ${springX}px ${springY}px,
+      rgba(220, 38, 38, 0.35),
+      transparent 80%
+    )
+  `;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+      className="mt-16 bg-black border border-red-600/20 rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden group/cta"
+      onMouseMove={handleMouseMove}
+      onTouchMove={handleTouchMove}
+    >
+      {/* Spotlight Follower */}
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 group-hover/cta:opacity-100 transition-opacity duration-300 z-0"
+        style={{ background }}
+      />
+
+      <div className="relative z-10">
+        <h4 className="font-heading text-2xl sm:text-3xl text-white mb-4">¿BUSCAS UN CONVENIO PARA TU EMPRESA?</h4>
+        <p className="text-gray-400 mb-8 max-w-xl mx-auto">Mantenemos tu flota comercial siempre lista. Consulta por nuestros planes especiales para PYMES y empresas con atención prioritaria.</p>
+        <a
+          href="#contacto"
+          className="inline-flex items-center gap-3 font-heading text-sm px-10 py-4 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-all duration-300 tracking-widest hover:shadow-[0_10px_30px_rgba(220,38,38,0.4)]"
+        >
+          COTIZAR FLOTILLA
+          <ChevronRight className="w-5 h-5" />
+        </a>
+      </div>
+    </motion.div>
   );
 }
