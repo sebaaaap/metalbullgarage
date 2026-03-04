@@ -18,7 +18,7 @@ export default function WhatsAppButton() {
       transition={{ delay: 1, type: "spring", stiffness: 260, damping: 20 }}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
-      className="fixed bottom-8 right-8 z-50 group pointer-events-auto"
+      className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-50 group pointer-events-auto"
       aria-label="Contactar por WhatsApp"
     >
       {/* Glow Effect */}

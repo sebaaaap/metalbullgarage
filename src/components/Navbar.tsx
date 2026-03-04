@@ -46,7 +46,7 @@ export default function Navbar() {
             {/* Logo */}
             <a href="#inicio" className="flex items-center" aria-label="Ir al inicio">
               <motion.div
-                className="relative w-20 h-20 sm:w-[88px] sm:h-[88px] cursor-pointer"
+                className="relative w-[clamp(4.5rem,15vw,5.5rem)] h-[clamp(4.5rem,15vw,5.5rem)] cursor-pointer"
                 style={{ filter: "drop-shadow(0 0 12px rgba(220,38,38,0.5))" }}
                 whileHover={{
                   rotate: [0, -12, 10, -8, 6, -4, 2, 0],

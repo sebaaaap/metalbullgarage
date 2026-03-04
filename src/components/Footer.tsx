@@ -31,7 +31,7 @@ export default function Footer() {
         {/* Top Section: Brand & Social */}
         <div className="flex flex-col items-center text-center pb-12 border-b border-white/5">
           <a href="#inicio" className="inline-block mb-4 group" aria-label="Ir al inicio">
-            <div className="relative w-24 h-24 sm:w-28 sm:h-28 mx-auto transition-all duration-300 group-hover:scale-105 group-hover:drop-shadow-[0_0_25px_rgba(220,38,38,0.7)]">
+            <div className="relative w-[clamp(5.5rem,20vw,7rem)] h-[clamp(5.5rem,20vw,7rem)] mx-auto transition-all duration-300 group-hover:scale-105 group-hover:drop-shadow-[0_0_25px_rgba(220,38,38,0.7)]">
               <Image
                 src="/metabulllogo.png"
                 alt="Logo"

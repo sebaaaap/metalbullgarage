@@ -1,12 +1,13 @@
 "use client";
 
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useInView, useScroll, useTransform, animate, useMotionValue } from "framer-motion";
 import { Shield, Award, Clock, Users, CheckCircle } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 
 const Counter = ({ value, label }: { value: string, label: string }) => {
-  const [count, setCount] = useState(0);
+  const countValue = useMotionValue(0);
+  const [displayValue, setDisplayValue] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
@@ -16,31 +17,19 @@ const Counter = ({ value, label }: { value: string, label: string }) => {
 
   useEffect(() => {
     if (isInView) {
-      let start = 0;
-      const end = target;
-      if (start === end) return;
-
-      const duration = 2000;
-      const increment = end / (duration / 16);
-
-      const timer = setInterval(() => {
-        start += increment;
-        if (start >= end) {
-          setCount(end);
-          clearInterval(timer);
-        } else {
-          setCount(Math.floor(start));
-        }
-      }, 16);
-
-      return () => clearInterval(timer);
+      const controls = animate(countValue, target, {
+        duration: 2.5,
+        ease: "easeOut",
+        onUpdate: (latest) => setDisplayValue(Math.floor(latest)),
+      });
+      return () => controls.stop();
     }
-  }, [isInView, target]);
+  }, [isInView, target, countValue]);
 
   return (
     <div ref={ref} className="relative z-10">
       <div className="font-heading text-4xl text-white mb-2">
-        {count}{suffix}
+        {displayValue}{suffix}
       </div>
       <div className="text-gray-500 text-xs uppercase tracking-wider">
         {label}
@@ -78,25 +67,17 @@ export default function About() {
     <section
       id="nosotros"
       ref={sectionRef}
-      className="py-24 relative overflow-hidden flex items-center min-h-[600px]"
+      className="py-24 relative overflow-hidden flex items-center min-h-[600px] bg-[hsl(0,0%,4%)]"
     >
-      {/* Parallax Background Image */}
-      <motion.div
-        style={{ y }}
-        className="absolute inset-0 z-0 h-[140%] -top-[20%]"
-      >
-        <Image
-          src="/hero-garage.jpg"
-          alt="Metal Bulls Garage"
-          fill
-          className="object-cover object-center opacity-100"
-          quality={100}
-          priority
+      {/* Background Decorative Element */}
+      <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `radial-gradient(circle at 20% 30%, rgba(220, 38, 38, 0.4) 0%, transparent 70%)`
+          }}
         />
-        {/* Minimal gradient for text legibility */}
-        <div className="absolute inset-0 bg-black/40 z-10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10" />
-      </motion.div>
+      </div>
 
       {/* Left red accent bar */}
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-red-600/60 to-transparent z-20" />

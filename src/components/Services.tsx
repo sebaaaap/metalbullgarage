@@ -128,6 +128,9 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
     )
   `;
 
+  // Static background for mobile (no tracking)
+  const mobileBackground = "radial-gradient(circle at 50% 50%, rgba(220, 38, 38, 0.15), transparent 80%)";
+
   function handleCotizar(e: React.MouseEvent) {
     e.stopPropagation(); // Evitar que la tarjeta se voltee de vuelta al hacer click
 
@@ -145,12 +148,12 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.08 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.4 }}
       onClick={() => setIsFlipped((f) => !f)}
-      className="cursor-pointer"
+      className="cursor-pointer w-full max-w-[calc(100vw-40px)] mx-auto sm:max-w-none"
       style={{ perspective: 1200, height: "280px" }}
     >
       <motion.div
@@ -172,24 +175,29 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
           }}
         >
           <div
-            className="relative bg-[hsl(0,0%,7%)] border border-white/10 rounded-xl p-6 pb-8 h-full shadow-lg hover:border-red-600/60 transition-all duration-300"
+            className="relative bg-[hsl(0,0%,7%)] border border-white/10 rounded-xl p-5 sm:p-6 pb-8 h-full shadow-lg hover:border-red-600/60 transition-all duration-300"
             onMouseMove={handleMouseMove}
           >
-            {/* Spotlight */}
+            {/* Spotlight - Dynamic on Desktop (sm:), Static on Mobile */}
             <motion.div
-              className="pointer-events-none absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 overflow-hidden"
+              className="pointer-events-none absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 overflow-hidden hidden sm:block"
               style={{ background }}
             />
+            <div
+              className="pointer-events-none absolute -inset-px rounded-xl opacity-20 z-0 overflow-hidden sm:hidden"
+              style={{ background: mobileBackground }}
+            />
+
             {/* Background icon */}
             <div className="absolute -bottom-6 -right-6 opacity-[0.03] group-hover:opacity-[0.08] transition-all duration-700 pointer-events-none">
               <service.icon className="w-44 h-44 -rotate-12 text-red-600" />
             </div>
             {/* Content */}
-            <div className="relative z-10 flex flex-col h-full gap-3">
-              <h3 className="font-heading text-lg sm:text-xl text-white group-hover:text-red-400 transition-colors duration-300">
+            <div className="relative z-10 flex flex-col h-full gap-2 sm:gap-3">
+              <h3 className="font-heading text-xl sm:text-xl text-white group-hover:text-red-400 transition-colors duration-300">
                 {service.title}
               </h3>
-              <p className="text-gray-400/80 text-xs sm:text-sm leading-relaxed line-clamp-3">
+              <p className="text-gray-400/80 text-sm sm:text-sm leading-relaxed line-clamp-3">
                 {service.description}
               </p>
               <div className="mt-auto flex items-center gap-1.5 text-[10px] text-red-500/80 font-heading tracking-widest uppercase">
@@ -217,7 +225,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-600/60 to-transparent" />
 
             <service.icon className="w-10 h-10 text-red-500 relative z-10" style={{ filter: "drop-shadow(0 0 10px rgba(220,38,38,0.5))" }} />
-            <h3 className="font-heading text-lg sm:text-xl text-white text-center leading-tight max-w-[90%] relative z-10">{service.title}</h3>
+            <h3 className="font-heading text-xl sm:text-xl text-white text-center leading-tight max-w-[90%] relative z-10">{service.title}</h3>
 
             <button
               onClick={handleCotizar}
@@ -244,7 +252,7 @@ export default function Services() {
         }}
       />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+      <div className="max-w-6xl mx-auto px-5 sm:px-6 relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
