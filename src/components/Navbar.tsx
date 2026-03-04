@@ -36,31 +36,23 @@ export default function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-            ? "bg-black/95 backdrop-blur-md border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
-            : "bg-transparent"
+          ? "bg-black/95 backdrop-blur-md border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
+          : "bg-transparent"
           }`}
         id="navbar"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-24">
             {/* Logo */}
-            <a href="#inicio" className="flex items-center gap-3 group">
-              <div className="relative w-14 h-14 transition-transform duration-300 group-hover:scale-105">
+            <a href="#inicio" className="flex items-center group" aria-label="Ir al inicio">
+              <div className="relative w-20 h-20 sm:w-[88px] sm:h-[88px] transition-all duration-300 group-hover:scale-105 group-hover:drop-shadow-[0_0_18px_rgba(220,38,38,0.7)]">
                 <Image
                   src="/metabulllogo.png"
-                  alt="Metal Bulls Garage Logo"
+                  alt="Logo"
                   fill
-                  className="object-contain drop-shadow-[0_0_10px_rgba(220,38,38,0.6)]"
+                  className="object-contain drop-shadow-[0_0_12px_rgba(220,38,38,0.5)]"
                   priority
                 />
-              </div>
-              <div className="hidden sm:flex flex-col">
-                <span className="font-heading text-lg text-white leading-tight tracking-wider">
-                  METAL BULLS
-                </span>
-                <span className="font-heading text-xs leading-tight tracking-[0.3em]" style={{ color: "hsl(0,72%,51%)" }}>
-                  GARAGE
-                </span>
               </div>
             </a>
 

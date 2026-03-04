@@ -210,7 +210,7 @@ export default function Services() {
             <span className="text-red-600">SERVICIOS</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-3xl mx-auto leading-relaxed">
-            En <span className="text-white font-medium">Metal Bulls Garage</span> brindamos soluciones integrales en vulcanización, mecánica general y mantenimiento preventivo. Con un enfoque especializado, ofrecemos convenios exclusivos y servicios personalizados para flotas de empresas y PYMES, garantizando la operatividad de sus vehículos en todo momento.
+            Brindamos soluciones integrales en vulcanización, mecánica general y mantenimiento preventivo. Con un enfoque especializado, ofrecemos convenios exclusivos y servicios personalizados para flotas de empresas y PYMES, garantizando la operatividad de sus vehículos en todo momento.
           </p>
         </motion.div>
 

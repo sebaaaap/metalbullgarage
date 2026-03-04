@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MapPin, Phone, Mail, Clock, Send, Instagram, Facebook, ChevronRight } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 import { useState } from "react";
 
 export default function Contact() {
@@ -102,14 +102,7 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="mt-12 flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-red-500 hover:border-red-500 transition-all duration-300">
-                <Instagram size={20} />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-red-500 hover:border-red-500 transition-all duration-300">
-                <Facebook size={20} />
-              </a>
-            </div>
+
           </motion.div>
 
           {/* Right Side: Form */}

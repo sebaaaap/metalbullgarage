@@ -123,7 +123,7 @@ export default function About() {
             <div className="w-16 h-1 bg-red-600 mb-8" />
 
             <p className="text-gray-400 text-lg mb-6 leading-relaxed">
-              En <strong className="text-white">Metal Bulls Garage</strong> somos un taller especializado en la reparación experta de neumáticos y llantas, brindando servicios automotrices integrales que recorren toda la pasión del mundo tuerca.
+              Somos un taller especializado en la reparación experta de neumáticos y llantas, brindando servicios automotrices integrales que recorren toda la pasión del mundo tuerca.
             </p>
 
             <p className="text-gray-400 mb-8 leading-relaxed">
@@ -194,7 +194,7 @@ export default function About() {
               className="col-span-2 bg-gradient-to-br from-red-900/20 to-red-950/10 border border-red-600/30 rounded-xl p-6 text-center"
             >
               <p className="text-gray-400 text-sm mb-3">
-                ¿Listo para experimentar el servicio Metal Bulls?
+                ¿Listo para experimentar nuestro servicio de excelencia?
               </p>
               <a
                 href="#contacto"

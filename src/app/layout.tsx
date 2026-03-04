@@ -16,13 +16,13 @@ const oswald = Oswald({
 });
 
 export const metadata: Metadata = {
-    title: "Metal Bulls Garage | Servicio Mecánico Profesional",
+    title: "Bull Garage | Servicio Mecánico Profesional",
     description:
-        "Taller mecánico profesional con más de 15 años de experiencia. Mecánica general, motor, frenos, suspensión, sistema eléctrico y más. Calidad garantizada.",
+        "Taller mecánico profesional con más de 10 años de experiencia. Neumáticos, llantas, mecánica general, frenos, suspensión, sistema eléctrico y más. Calidad garantizada.",
     keywords:
-        "taller mecánico, mecánica automotriz, servicio mecánico, reparación de autos, Metal Bulls Garage",
+        "taller mecánico, mecánica automotriz, servicio mecánico, reparación de autos, neumáticos",
     openGraph: {
-        title: "Metal Bulls Garage | Servicio Mecánico Profesional",
+        title: "Bull Garage | Servicio Mecánico Profesional",
         description:
             "Servicio mecánico profesional con la fuerza y precisión de un toro. Tu vehículo en las mejores manos.",
         type: "website",
