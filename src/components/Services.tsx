@@ -145,7 +145,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
       transition={{ duration: 0.5, delay: index * 0.08 }}
       onClick={() => setIsFlipped((f) => !f)}
       className="cursor-pointer"
-      style={{ perspective: 1200, height: "280px" }}
+      style={{ perspective: 1200, height: "210px" }}
     >
       <motion.div
         animate={{ rotateX: isFlipped ? 180 : 0 }}
@@ -162,7 +162,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
           style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
         >
           <div
-            className="relative bg-[hsl(0,0%,7%)] border border-white/10 rounded-xl p-8 h-full overflow-hidden shadow-lg hover:border-red-600/60 hover:-translate-y-1 transition-all duration-300"
+            className="relative bg-[hsl(0,0%,7%)] border border-white/10 rounded-xl p-6 h-full overflow-hidden shadow-lg hover:border-red-600/60 transition-all duration-300"
             onMouseMove={handleMouseMove}
           >
             {/* Spotlight */}
@@ -198,19 +198,17 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
             transform: "rotateX(180deg)",
           }}
         >
-          <div className="relative h-full bg-gradient-to-br from-[hsl(0,0%,6%)] to-black border border-red-600/40 rounded-xl p-8 flex flex-col items-center justify-center gap-4 overflow-hidden">
+          <div className="relative h-full bg-[hsl(0,0%,6%)] border border-red-600/40 rounded-xl p-5 flex flex-col items-center justify-center gap-3 overflow-hidden shadow-2xl">
             {/* Glow bg */}
-            <div className="absolute inset-0 bg-gradient-to-br from-red-900/20 via-transparent to-transparent pointer-events-none" />
-            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-red-600 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-br from-red-900/10 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-600/60 to-transparent" />
 
-            <service.icon className="w-14 h-14 text-red-500 relative z-10" style={{ filter: "drop-shadow(0 0 12px rgba(220,38,38,0.6))" }} />
-            <h3 className="font-heading text-xl text-white text-center relative z-10">{service.title}</h3>
-            <p className="text-gray-400 text-xs text-center leading-relaxed max-w-[200px] relative z-10">
-              {service.description}
-            </p>
+            <service.icon className="w-10 h-10 text-red-500 relative z-10" style={{ filter: "drop-shadow(0 0 10px rgba(220,38,38,0.5))" }} />
+            <h3 className="font-heading text-lg sm:text-xl text-white text-center leading-tight max-w-[90%] relative z-10">{service.title}</h3>
+
             <button
               onClick={handleCotizar}
-              className="relative z-10 mt-2 font-heading text-sm px-8 py-3 bg-red-600 text-white rounded-lg tracking-widest hover:bg-red-500 active:scale-95 transition-all duration-200 shadow-[0_4px_20px_rgba(220,38,38,0.4)] hover:shadow-[0_4px_30px_rgba(220,38,38,0.7)]"
+              className="relative z-10 mt-1 font-heading text-xs px-6 py-2.5 bg-red-600 text-white rounded-lg tracking-widest hover:bg-red-500 active:scale-95 transition-all duration-200 shadow-[0_4px_15px_rgba(220,38,38,0.3)] hover:shadow-[0_4px_25px_rgba(220,38,38,0.6)]"
             >
               COTIZAR
             </button>
@@ -233,7 +231,7 @@ export default function Services() {
         }}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}

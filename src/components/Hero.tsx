@@ -337,6 +337,8 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.55 }}
             className="text-gray-400 text-sm sm:text-base tracking-[0.25em] uppercase mb-10 flex items-center gap-3 flex-wrap justify-center"
           >
+            <span>Autos &amp; Motos</span>
+            <span className="w-1 h-1 rounded-full bg-red-600 inline-block" />
             <span>Taller Mecánico</span>
             <span className="w-1 h-1 rounded-full bg-red-600 inline-block" />
             <span>Neumáticos &amp; Llantas</span>
