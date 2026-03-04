@@ -116,8 +116,8 @@ export default function About() {
             </div>
 
             <h2 className="text-4xl sm:text-5xl font-heading mb-6">
-              <span className="text-metallic">PASIÓN</span>{" "}
-              <span className="text-red-600">AUTOMOTRIZ</span>
+              <span className="text-metallic">META BULL</span>{" "}
+              <span className="text-red-600">GARAGE</span>
             </h2>
 
             <div className="w-16 h-1 bg-red-600 mb-8" />

@@ -41,8 +41,8 @@ export default function Footer() {
             </div>
           </a>
           <p className="font-heading text-2xl sm:text-3xl mb-6 tracking-wider">
-            <span className="text-white">PASIÓN</span>{" "}
-            <span className="text-red-600">AUTOMOTRIZ</span>
+            <span className="text-white">META BULL</span>{" "}
+            <span className="text-red-600">GARAGE</span>
           </p>
 
           <p className="text-gray-400 text-lg leading-relaxed max-w-2xl mb-8">

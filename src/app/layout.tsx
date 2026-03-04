@@ -16,7 +16,7 @@ const oswald = Oswald({
 });
 
 export const metadata: Metadata = {
-    title: "Pasión Automotriz | Servicio Mecánico Profesional",
+    title: "Meta Bull Garage | Servicio Mecánico Profesional",
     description:
         "Taller mecánico profesional con más de 10 años de experiencia. Neumáticos, llantas, mecánica general, frenos, suspensión, sistema eléctrico y más. Calidad garantizada.",
     keywords:
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
         apple: "/metabulllogo.png",
     },
     openGraph: {
-        title: "Pasión Automotriz | Servicio Mecánico Profesional",
+        title: "Meta Bull Garage | Servicio Mecánico Profesional",
         description:
             "Servicio mecánico profesional con la fuerza y precisión de un toro. Tu vehículo en las mejores manos.",
         type: "website",
