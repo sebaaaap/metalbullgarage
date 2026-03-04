@@ -26,22 +26,39 @@ export default function Brands() {
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-600/40 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/5 to-transparent" />
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-12">
-                {/* Header */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-16 relative">
+                {/* Header decorativo de fondo */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center opacity-[0.03] select-none pointer-events-none">
+                    <span className="font-heading text-[12vw] tracking-tighter uppercase text-white leading-none">PARTNERS</span>
+                </div>
+
+                {/* Header real */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="text-center"
+                    transition={{ duration: 0.8 }}
+                    className="relative text-center"
                 >
-                    <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 bg-red-600/10 border border-red-600/20 rounded-full">
-                        <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-                        <span className="text-red-400 text-xs font-heading tracking-widest uppercase">Nuestros Aliados</span>
+                    <div className="inline-flex items-center gap-3 mb-6 px-5 py-2 bg-red-600/10 border border-red-600/20 rounded-full backdrop-blur-sm">
+                        <span className="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse shadow-[0_0_8px_rgba(220,38,38,1)]" />
+                        <span className="text-red-400 text-[10px] font-heading tracking-[0.3em] uppercase font-bold">Nuestros Aliados</span>
                     </div>
-                    <h2 className="text-4xl sm:text-5xl font-heading">
-                        <span className="text-white">MARCAS CON LAS QUE</span>{" "}
-                        <span className="text-red-600">TRABAJAMOS</span>
+
+                    <h2 className="font-heading text-center leading-[0.9] flex flex-col items-center">
+                        <span className="text-white text-[clamp(2rem,5vw,3.5rem)] tracking-tight">
+                            MARCAS CON LAS QUE
+                        </span>
+                        <span
+                            className="text-[clamp(2.5rem,7vw,4.5rem)] tracking-tighter"
+                            style={{
+                                WebkitTextStroke: "1px rgba(220,38,38,0.8)",
+                                color: "transparent",
+                                textShadow: "0 0 30px rgba(220,38,38,0.2)"
+                            }}
+                        >
+                            TRABAJAMOS
+                        </span>
                     </h2>
                 </motion.div>
             </div>

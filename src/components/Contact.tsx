@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -30,6 +30,22 @@ export default function Contact() {
     "Venta de Accesorios",
     "Empresas y PYMES",
   ];
+
+  const serviceSelectRef = useRef<HTMLSelectElement>(null);
+
+  // Pre-selecciona el servicio al llegar desde una tarjeta de servicio
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const serviceName = (e as CustomEvent<string>).detail;
+      setFormData((prev) => ({ ...prev, service: serviceName }));
+      // Pequeño delay para que el scroll termine antes de hacer focus
+      setTimeout(() => {
+        serviceSelectRef.current?.focus();
+      }, 800);
+    };
+    window.addEventListener("service-preselect", handler);
+    return () => window.removeEventListener("service-preselect", handler);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -169,6 +185,7 @@ export default function Contact() {
                 <div className="space-y-2">
                   <label className="text-[10px] font-heading font-medium text-gray-400 uppercase tracking-widest pl-1">Servicio a Cotizar</label>
                   <select
+                    ref={serviceSelectRef}
                     required
                     className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-red-600 transition-colors text-sm appearance-none cursor-pointer"
                     value={formData.service}

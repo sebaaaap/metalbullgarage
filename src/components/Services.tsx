@@ -18,7 +18,7 @@ import {
   CheckCircle,
   ChevronRight
 } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const services = [
   {
@@ -108,10 +108,9 @@ const services = [
 ];
 
 function ServiceCard({ service, index }: { service: typeof services[0]; index: number }) {
+  const [isFlipped, setIsFlipped] = useState(false);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-
-  // Add smoothing to the light movement
   const springX = useSpring(mouseX, { damping: 30, stiffness: 200 });
   const springY = useSpring(mouseY, { damping: 30, stiffness: 200 });
 
@@ -119,12 +118,6 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
     const { left, top } = currentTarget.getBoundingClientRect();
     mouseX.set(clientX - left);
     mouseY.set(clientY - top);
-  }
-
-  function handleTouchMove({ currentTarget, touches }: React.TouchEvent) {
-    const { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(touches[0].clientX - left);
-    mouseY.set(touches[0].clientY - top);
   }
 
   const background = useMotionTemplate`
@@ -135,47 +128,95 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
     )
   `;
 
+  function handleCotizar(e: React.MouseEvent) {
+    e.stopPropagation();
+    window.dispatchEvent(
+      new CustomEvent("service-preselect", { detail: service.title })
+    );
+    const section = document.getElementById("contacto");
+    if (section) section.scrollIntoView({ behavior: "smooth" });
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group relative"
+      transition={{ duration: 0.5, delay: index * 0.08 }}
+      onClick={() => setIsFlipped((f) => !f)}
+      className="cursor-pointer"
+      style={{ perspective: 1200, height: "280px" }}
     >
-      <div
-        className="relative bg-[hsl(0,0%,7%)] border border-white/10 rounded-xl p-8 h-full transition-all duration-400 hover:border-red-600/60 overflow-hidden cursor-default shadow-lg hover:-translate-y-1"
-        onMouseMove={handleMouseMove}
-        onTouchMove={handleTouchMove}
+      <motion.div
+        animate={{ rotateX: isFlipped ? 180 : 0 }}
+        transition={{ duration: 0.55, ease: [0.23, 1, 0.32, 1] }}
+        style={{
+          transformStyle: "preserve-3d",
+          height: "100%",
+          position: "relative",
+        }}
       >
-        {/* Spotlight Follower */}
-        <motion.div
-          className="pointer-events-none absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
-          style={{ background }}
-        />
-
-        {/* Background Icon Symbol */}
-        <div className="absolute -bottom-6 -right-6 opacity-[0.03] group-hover:opacity-[0.08] group-hover:scale-110 transition-all duration-700 pointer-events-none">
-          <service.icon className="w-44 h-44 -rotate-12 text-red-600" />
-        </div>
-
-        {/* Content */}
-        <div className="relative z-10">
-          <h3 className="font-heading text-xl text-white mb-3 group-hover:text-red-400 transition-colors duration-300">
-            {service.title}
-          </h3>
-          <p className="text-gray-400/80 text-sm leading-relaxed mb-8">{service.description}</p>
-
-          {/* Highlight tag */}
-          <div className="flex items-center gap-1.5 text-xs text-red-500/80 font-heading tracking-wider uppercase font-medium">
-            <span className="w-1.5 h-1.5 bg-red-600 rounded-full mr-1" />
-            {service.highlight}
+        {/* ── FRONT ── */}
+        <div
+          className="absolute inset-0 group"
+          style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
+        >
+          <div
+            className="relative bg-[hsl(0,0%,7%)] border border-white/10 rounded-xl p-8 h-full overflow-hidden shadow-lg hover:border-red-600/60 hover:-translate-y-1 transition-all duration-300"
+            onMouseMove={handleMouseMove}
+          >
+            {/* Spotlight */}
+            <motion.div
+              className="pointer-events-none absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
+              style={{ background }}
+            />
+            {/* Background icon */}
+            <div className="absolute -bottom-6 -right-6 opacity-[0.03] group-hover:opacity-[0.08] transition-all duration-700 pointer-events-none">
+              <service.icon className="w-44 h-44 -rotate-12 text-red-600" />
+            </div>
+            {/* Content */}
+            <div className="relative z-10">
+              <h3 className="font-heading text-xl text-white mb-3 group-hover:text-red-400 transition-colors duration-300">
+                {service.title}
+              </h3>
+              <p className="text-gray-400/80 text-sm leading-relaxed mb-6">{service.description}</p>
+              <div className="flex items-center gap-1.5 text-xs text-red-500/80 font-heading tracking-wider uppercase">
+                <span className="w-1.5 h-1.5 bg-red-600 rounded-full" />
+                {service.highlight}
+              </div>
+            </div>
+            <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-gradient-to-r from-red-600 to-red-400 group-hover:w-full transition-all duration-500" />
           </div>
         </div>
 
-        {/* Bottom hover line */}
-        <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-gradient-to-r from-red-600 to-red-400 group-hover:w-full transition-all duration-500" />
-      </div>
+        {/* ── BACK ── */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+            transform: "rotateX(180deg)",
+          }}
+        >
+          <div className="relative h-full bg-gradient-to-br from-[hsl(0,0%,6%)] to-black border border-red-600/40 rounded-xl p-8 flex flex-col items-center justify-center gap-4 overflow-hidden">
+            {/* Glow bg */}
+            <div className="absolute inset-0 bg-gradient-to-br from-red-900/20 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-red-600 to-transparent" />
+
+            <service.icon className="w-14 h-14 text-red-500 relative z-10" style={{ filter: "drop-shadow(0 0 12px rgba(220,38,38,0.6))" }} />
+            <h3 className="font-heading text-xl text-white text-center relative z-10">{service.title}</h3>
+            <p className="text-gray-400 text-xs text-center leading-relaxed max-w-[200px] relative z-10">
+              {service.description}
+            </p>
+            <button
+              onClick={handleCotizar}
+              className="relative z-10 mt-2 font-heading text-sm px-8 py-3 bg-red-600 text-white rounded-lg tracking-widest hover:bg-red-500 active:scale-95 transition-all duration-200 shadow-[0_4px_20px_rgba(220,38,38,0.4)] hover:shadow-[0_4px_30px_rgba(220,38,38,0.7)]"
+            >
+              COTIZAR
+            </button>
+          </div>
+        </div>
+      </motion.div>
     </motion.div>
   );
 }
