@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import { services } from "./Services";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -14,22 +15,7 @@ export default function Contact() {
     message: "",
   });
 
-  const servicesList = [
-    "Mecánica Rápida",
-    "Venta y Rep. de Neumáticos",
-    "Vulca Móvil",
-    "Cambio de Aceite",
-    "Pastillas de Freno",
-    "Scanner Electrónico",
-    "Balanceo",
-    "Reparación de Llantas",
-    "Servicio de Inyectores",
-    "Aire Acondicionado",
-    "Servicio TPMS",
-    "Cambio de Rodamientos",
-    "Venta de Accesorios",
-    "Empresas y PYMES",
-  ];
+  const servicesList = services.map(s => s.title);
 
   const serviceSelectRef = useRef<HTMLSelectElement>(null);
 
@@ -40,7 +26,13 @@ export default function Contact() {
       setFormData((prev) => ({ ...prev, service: serviceName }));
       // Pequeño delay para que el scroll termine antes de hacer focus
       setTimeout(() => {
-        serviceSelectRef.current?.focus();
+        if (serviceSelectRef.current) {
+          serviceSelectRef.current.focus();
+          serviceSelectRef.current.classList.add("ring-2", "ring-red-600");
+          setTimeout(() => {
+            serviceSelectRef.current?.classList.remove("ring-2", "ring-red-600");
+          }, 2000);
+        }
       }, 800);
     };
     window.addEventListener("service-preselect", handler);
@@ -187,7 +179,7 @@ export default function Contact() {
                   <select
                     ref={serviceSelectRef}
                     required
-                    className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-red-600 transition-colors text-sm appearance-none cursor-pointer"
+                    className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-red-600 transition-all text-sm appearance-none cursor-pointer focus:ring-2 focus:ring-red-600/20"
                     value={formData.service}
                     onChange={(e) => setFormData({ ...formData, service: e.target.value })}
                   >

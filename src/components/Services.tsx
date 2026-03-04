@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 import { useRef, useState } from "react";
 
-const services = [
+export const services = [
   {
     icon: Zap,
     title: "Mecánica Rápida",
@@ -294,6 +294,14 @@ function BottomCTA() {
     )
   `;
 
+  function handleCotizarFlotilla() {
+    window.dispatchEvent(
+      new CustomEvent("service-preselect", { detail: "Empresas y PYMES" })
+    );
+    const section = document.getElementById("contacto");
+    if (section) section.scrollIntoView({ behavior: "smooth" });
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -313,13 +321,13 @@ function BottomCTA() {
       <div className="relative z-10">
         <h4 className="font-heading text-2xl sm:text-3xl text-white mb-4">¿BUSCAS UN CONVENIO PARA TU EMPRESA?</h4>
         <p className="text-gray-400 mb-8 max-w-xl mx-auto">Mantenemos tu flota comercial siempre lista. Consulta por nuestros planes especiales para PYMES y empresas con atención prioritaria.</p>
-        <a
-          href="#contacto"
+        <button
+          onClick={handleCotizarFlotilla}
           className="inline-flex items-center gap-3 font-heading text-sm px-10 py-4 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-all duration-300 tracking-widest hover:shadow-[0_10px_30px_rgba(220,38,38,0.4)]"
         >
           COTIZAR FLOTILLA
           <ChevronRight className="w-5 h-5" />
-        </a>
+        </button>
       </div>
     </motion.div>
   );
