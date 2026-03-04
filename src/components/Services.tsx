@@ -129,12 +129,18 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
   `;
 
   function handleCotizar(e: React.MouseEvent) {
-    e.stopPropagation();
+    e.stopPropagation(); // Evitar que la tarjeta se voltee de vuelta al hacer click
+
+    // 1. Emitir evento para el formulario
     window.dispatchEvent(
       new CustomEvent("service-preselect", { detail: service.title })
     );
-    const section = document.getElementById("contacto");
-    if (section) section.scrollIntoView({ behavior: "smooth" });
+
+    // 2. Scroll forzado al formulario
+    const contactSection = document.getElementById("contacto");
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" });
+    }
   }
 
   return (
@@ -145,7 +151,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
       transition={{ duration: 0.5, delay: index * 0.08 }}
       onClick={() => setIsFlipped((f) => !f)}
       className="cursor-pointer"
-      style={{ perspective: 1200, height: "210px" }}
+      style={{ perspective: 1200, height: "280px" }}
     >
       <motion.div
         animate={{ rotateX: isFlipped ? 180 : 0 }}
@@ -159,15 +165,19 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
         {/* ── FRONT ── */}
         <div
           className="absolute inset-0 group"
-          style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
+          style={{
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+            pointerEvents: isFlipped ? "none" : "auto"
+          }}
         >
           <div
-            className="relative bg-[hsl(0,0%,7%)] border border-white/10 rounded-xl p-6 h-full overflow-hidden shadow-lg hover:border-red-600/60 transition-all duration-300"
+            className="relative bg-[hsl(0,0%,7%)] border border-white/10 rounded-xl p-6 pb-8 h-full shadow-lg hover:border-red-600/60 transition-all duration-300"
             onMouseMove={handleMouseMove}
           >
             {/* Spotlight */}
             <motion.div
-              className="pointer-events-none absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
+              className="pointer-events-none absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 overflow-hidden"
               style={{ background }}
             />
             {/* Background icon */}
@@ -175,13 +185,15 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
               <service.icon className="w-44 h-44 -rotate-12 text-red-600" />
             </div>
             {/* Content */}
-            <div className="relative z-10">
-              <h3 className="font-heading text-xl text-white mb-3 group-hover:text-red-400 transition-colors duration-300">
+            <div className="relative z-10 flex flex-col h-full gap-3">
+              <h3 className="font-heading text-lg sm:text-xl text-white group-hover:text-red-400 transition-colors duration-300">
                 {service.title}
               </h3>
-              <p className="text-gray-400/80 text-sm leading-relaxed mb-6">{service.description}</p>
-              <div className="flex items-center gap-1.5 text-xs text-red-500/80 font-heading tracking-wider uppercase">
-                <span className="w-1.5 h-1.5 bg-red-600 rounded-full" />
+              <p className="text-gray-400/80 text-xs sm:text-sm leading-relaxed line-clamp-3">
+                {service.description}
+              </p>
+              <div className="mt-auto flex items-center gap-1.5 text-[10px] text-red-500/80 font-heading tracking-widest uppercase">
+                <span className="w-1.5 h-1.5 bg-red-600 rounded-full shrink-0" />
                 {service.highlight}
               </div>
             </div>
@@ -196,6 +208,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
             transform: "rotateX(180deg)",
+            pointerEvents: isFlipped ? "auto" : "none"
           }}
         >
           <div className="relative h-full bg-[hsl(0,0%,6%)] border border-red-600/40 rounded-xl p-5 flex flex-col items-center justify-center gap-3 overflow-hidden shadow-2xl">
@@ -208,7 +221,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
 
             <button
               onClick={handleCotizar}
-              className="relative z-10 mt-1 font-heading text-xs px-6 py-2.5 bg-red-600 text-white rounded-lg tracking-widest hover:bg-red-500 active:scale-95 transition-all duration-200 shadow-[0_4px_15px_rgba(220,38,38,0.3)] hover:shadow-[0_4px_25px_rgba(220,38,38,0.6)]"
+              className="relative z-[100] mt-1 font-heading text-xs px-6 py-2.5 bg-red-600 text-white rounded-lg tracking-widest hover:bg-red-500 active:scale-95 transition-all duration-200 shadow-[0_4px_15px_rgba(220,38,38,0.3)] hover:shadow-[0_4px_25px_rgba(220,38,38,0.6)] cursor-pointer"
             >
               COTIZAR
             </button>
