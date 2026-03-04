@@ -44,16 +44,31 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-24">
             {/* Logo */}
-            <a href="#inicio" className="flex items-center group" aria-label="Ir al inicio">
-              <div className="relative w-20 h-20 sm:w-[88px] sm:h-[88px] transition-all duration-300 group-hover:scale-105 group-hover:drop-shadow-[0_0_18px_rgba(220,38,38,0.7)]">
+            <a href="#inicio" className="flex items-center" aria-label="Ir al inicio">
+              <motion.div
+                className="relative w-20 h-20 sm:w-[88px] sm:h-[88px] cursor-pointer"
+                style={{ filter: "drop-shadow(0 0 12px rgba(220,38,38,0.5))" }}
+                whileHover={{
+                  rotate: [0, -12, 10, -8, 6, -4, 2, 0],
+                  scale: [1, 1.1, 1.08, 1.1, 1.08, 1.1, 1.08, 1.05],
+                  filter: [
+                    "drop-shadow(0 0 12px rgba(220,38,38,0.5))",
+                    "drop-shadow(0 0 28px rgba(220,38,38,0.9))",
+                    "drop-shadow(0 0 22px rgba(220,38,38,0.7))",
+                    "drop-shadow(0 0 28px rgba(220,38,38,0.9))",
+                  ],
+                  transition: { duration: 0.55, ease: "easeInOut" },
+                }}
+                whileTap={{ scale: 0.9, rotate: -8, transition: { duration: 0.15 } }}
+              >
                 <Image
                   src="/metabulllogo.png"
                   alt="Logo"
                   fill
-                  className="object-contain drop-shadow-[0_0_12px_rgba(220,38,38,0.5)]"
+                  className="object-contain"
                   priority
                 />
-              </div>
+              </motion.div>
             </a>
 
             {/* Desktop Navigation */}

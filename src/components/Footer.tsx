@@ -30,7 +30,7 @@ export default function Footer() {
 
         {/* Top Section: Brand & Social */}
         <div className="flex flex-col items-center text-center pb-12 border-b border-white/5">
-          <a href="#inicio" className="inline-block mb-6 group" aria-label="Ir al inicio">
+          <a href="#inicio" className="inline-block mb-4 group" aria-label="Ir al inicio">
             <div className="relative w-24 h-24 sm:w-28 sm:h-28 mx-auto transition-all duration-300 group-hover:scale-105 group-hover:drop-shadow-[0_0_25px_rgba(220,38,38,0.7)]">
               <Image
                 src="/metabulllogo.png"
@@ -40,6 +40,10 @@ export default function Footer() {
               />
             </div>
           </a>
+          <p className="font-heading text-2xl sm:text-3xl mb-6 tracking-wider">
+            <span className="text-white">METAL BULLS</span>{" "}
+            <span className="text-red-600">GARAGE</span>
+          </p>
 
           <p className="text-gray-400 text-lg leading-relaxed max-w-2xl mb-8">
             Llevando la excelencia mecánica al siguiente nivel con pasión, precisión y potencia. Tu taller de confianza para vehículos de alta gama y uso diario.
