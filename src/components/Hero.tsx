@@ -281,7 +281,7 @@ export default function Hero() {
             </LogoFloat>
           </motion.div>
 
-          {/* Headline - Sync with Logo */}
+          {/* Headline - Brand Name */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -290,19 +290,19 @@ export default function Hero() {
           >
             <h1 className="font-heading leading-none tracking-wide text-center">
               <span
-                className="block text-[clamp(2.8rem,8vw,6rem)] text-white"
+                className="block text-[clamp(2.5rem,7vw,5.5rem)] text-white"
                 style={{ textShadow: "0 0 60px rgba(220,38,38,0.2)" }}
               >
-                FUERZA
+                METAL BULL
               </span>
               <span
-                className="block text-[clamp(2.8rem,8vw,6rem)]"
+                className="block text-[clamp(2.5rem,7vw,5.5rem)]"
                 style={{
                   WebkitTextStroke: "1.5px rgba(220,38,38,0.8)",
                   color: "transparent",
                 }}
               >
-                &amp; PRECISIÓN
+                GARAGE
               </span>
             </h1>
           </motion.div>

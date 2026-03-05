@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 import { Star, Quote, CheckCircle2 } from "lucide-react";
+import { GooglePlaceData } from "@/lib/google-reviews";
 
-const reviews = [
+const fallbackReviews = [
   {
     name: "Carlos Mendoza",
     date: "Hace 2 meses",
@@ -55,9 +56,21 @@ const reviews = [
 ];
 
 // Double the array for seamless scrolling
-const allReviews = [...reviews, ...reviews];
 
-export default function Testimonials() {
+export default function Testimonials({ apiData }: { apiData?: GooglePlaceData | null }) {
+  const reviewsToUse = apiData && apiData.reviews && apiData.reviews.length > 0
+    ? apiData.reviews.map((r) => ({
+      name: r.authorAttribution?.displayName || 'Cliente',
+      date: r.relativePublishTimeDescription,
+      rating: r.rating,
+      text: r.text?.text || '',
+      initial: r.authorAttribution?.displayName ? r.authorAttribution.displayName.charAt(0).toUpperCase() : 'C',
+      verified: true,
+    }))
+    : fallbackReviews;
+
+  const allReviews = [...reviewsToUse, ...reviewsToUse];
+
   return (
     <section id="testimonios" className="py-24 relative overflow-hidden bg-black">
       {/* Background Decorative Elements */}
@@ -78,7 +91,10 @@ export default function Testimonials() {
                 <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
               ))}
             </div>
-            <span className="text-gray-400 font-medium ml-2">4.9 / 5.0 en Google Reviews</span>
+            <span className="text-gray-400 font-medium ml-2">
+              {apiData?.rating || '4.9'} / 5.0 en Google Reviews
+              {apiData?.userRatingCount ? ` (${apiData.userRatingCount} reseñas)` : ''}
+            </span>
           </div>
 
           <h2 className="text-4xl sm:text-5xl font-heading mb-4">
@@ -91,7 +107,7 @@ export default function Testimonials() {
       {/* Infinite Logo Scroller / Carousel */}
       <div className="flex relative items-center py-10">
         <motion.div
-          className="flex gap-6 whitespace-nowrap"
+          className="flex gap-5 whitespace-nowrap py-4"
           animate={{
             x: ["0%", "-50%"]
           }}
@@ -105,9 +121,9 @@ export default function Testimonials() {
           {allReviews.map((review, index) => (
             <div
               key={`${review.name}-${index}`}
-              className="w-[350px] sm:w-[450px] bg-[hsl(0,0%,7%)] border border-white/10 rounded-2xl p-6 relative group hover:border-red-600/30 transition-all duration-300 inline-block overflow-hidden"
+              className="w-[280px] sm:w-[340px] bg-[hsl(0,0%,7%)] border border-white/10 rounded-2xl p-5 relative group hover:border-red-600/30 transition-all duration-300 flex flex-col overflow-hidden"
             >
-              <div className="absolute top-6 right-6 opacity-30 group-hover:opacity-100 transition-opacity">
+              <div className="absolute top-5 right-5 opacity-30 group-hover:opacity-100 transition-opacity">
                 <svg viewBox="0 0 24 24" className="w-5 h-5 fill-white/20">
                   <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
                   <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
@@ -131,13 +147,13 @@ export default function Testimonials() {
                 </div>
               </div>
 
-              <div className="flex gap-0.5 mb-3">
+              <div className="flex gap-0.5 mb-2">
                 {[...Array(review.rating)].map((_, i) => (
                   <Star key={i} size={14} className="fill-yellow-400 text-yellow-400" />
                 ))}
               </div>
 
-              <p className="text-gray-300 text-sm leading-relaxed whitespace-normal italic">
+              <p className="text-gray-300 text-[13px] leading-relaxed whitespace-normal italic line-clamp-4">
                 "{review.text}"
               </p>
             </div>
@@ -154,7 +170,7 @@ export default function Testimonials() {
           className="mt-12 text-center"
         >
           <a
-            href="https://google.com/maps"
+            href={apiData?.googleMapsUri || "https://google.com/maps"}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-gray-500 hover:text-white transition-colors text-sm font-medium border-b border-transparent hover:border-white pb-0.5"
