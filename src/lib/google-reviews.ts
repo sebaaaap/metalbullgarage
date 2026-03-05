@@ -34,7 +34,8 @@ export async function getGoogleReviews(): Promise<GooglePlaceData | null> {
     try {
         const res = await fetch(url, {
             next: {
-                revalidate: 86400 // Cachear resultados por 24 horas para evitar exceder límites y costos innecesarios
+                // Cachear resultados por 7 días (604800 segundos) para optimizar consultas y costos
+                revalidate: 604800
             },
         });
 
@@ -45,8 +46,11 @@ export async function getGoogleReviews(): Promise<GooglePlaceData | null> {
         const data = await res.json();
 
         if (data) {
+            // Filtrar para mostrar solo reseñas de 4 y 5 estrellas
+            const filteredReviews = (data.reviews as GoogleReview[])?.filter(r => r.rating >= 4) || [];
+
             return {
-                reviews: (data.reviews as GoogleReview[]) || [],
+                reviews: filteredReviews,
                 rating: data.rating || 4.9,
                 userRatingCount: data.userRatingCount || 0,
                 googleMapsUri: data.googleMapsUri || "https://google.com/maps",

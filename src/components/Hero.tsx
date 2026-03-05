@@ -293,7 +293,7 @@ export default function Hero() {
                 className="block text-[clamp(2.5rem,7vw,5.5rem)] text-white"
                 style={{ textShadow: "0 0 60px rgba(220,38,38,0.2)" }}
               >
-                METAL BULL
+                METAL BULLS
               </span>
               <span
                 className="block text-[clamp(2.5rem,7vw,5.5rem)]"

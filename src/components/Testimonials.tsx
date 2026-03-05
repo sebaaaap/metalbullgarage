@@ -55,20 +55,51 @@ const fallbackReviews = [
   }
 ];
 
-// Double the array for seamless scrolling
-
 export default function Testimonials({ apiData }: { apiData?: GooglePlaceData | null }) {
-  const reviewsToUse = apiData && apiData.reviews && apiData.reviews.length > 0
-    ? apiData.reviews.map((r) => ({
-      name: r.authorAttribution?.displayName || 'Cliente',
-      date: r.relativePublishTimeDescription,
-      rating: r.rating,
-      text: r.text?.text || '',
-      initial: r.authorAttribution?.displayName ? r.authorAttribution.displayName.charAt(0).toUpperCase() : 'C',
-      verified: true,
-    }))
-    : fallbackReviews;
+  // Double the array for seamless scrolling
 
+  // 1. Obtener las reseñas de Google y deduplicarlas por nombre de usuario (ignorando mayúsculas)
+  let googleReviews: typeof fallbackReviews = [];
+
+  if (apiData && apiData.reviews && apiData.reviews.length > 0) {
+    const seenNames = new Set<string>();
+
+    apiData.reviews.forEach((r) => {
+      const name = r.authorAttribution?.displayName || 'Cliente';
+      const nameKey = name.toLowerCase().trim();
+
+      if (!seenNames.has(nameKey)) {
+        seenNames.add(nameKey);
+        googleReviews.push({
+          name: name,
+          date: r.relativePublishTimeDescription,
+          rating: r.rating,
+          text: r.text?.text || '',
+          initial: name.charAt(0).toUpperCase(),
+          verified: true,
+        });
+      }
+    });
+  }
+
+  // 2. Si tenemos muy pocas reseñas (porque Google devuelve máximo 5 y filtramos algunas),
+  // el carrusel infinito hace muy evidente la repetición.
+  // Así que rellenamos con los "fallbackReviews" hasta tener al menos 6 reseñas distintas.
+  let reviewsToUse = [...googleReviews];
+
+  if (reviewsToUse.length > 0 && reviewsToUse.length < 6) {
+    const existingNames = new Set(reviewsToUse.map(r => r.name.toLowerCase().trim()));
+    for (const fr of fallbackReviews) {
+      if (!existingNames.has(fr.name.toLowerCase().trim())) {
+        reviewsToUse.push(fr);
+      }
+      if (reviewsToUse.length >= 6) break;
+    }
+  } else if (reviewsToUse.length === 0) {
+    reviewsToUse = fallbackReviews; // Si no hay nada o falló la API, usamos todas las de prueba
+  }
+
+  // 3. Duplicar el array final para el efecto de scroll infinito sin cortes
   const allReviews = [...reviewsToUse, ...reviewsToUse];
 
   return (
