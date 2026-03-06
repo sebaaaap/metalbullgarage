@@ -15,6 +15,7 @@ const brands = [
     { src: "/marcas/vipal.png", alt: "Vipal", name: "Vipal" },
     { src: "/marcas/wurth.png", alt: "Würth", name: "Würth" },
     { src: "/marcas/launch.png", alt: "Launch", name: "Launch" },
+    { src: "/marcas/carplus.png", alt: "Carplus", name: "Carplus" },
 ];
 
 // Duplicamos para loop infinito sin cortes
