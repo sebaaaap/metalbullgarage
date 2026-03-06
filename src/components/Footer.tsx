@@ -119,7 +119,9 @@ export default function Footer() {
               <li className="flex flex-col md:flex-row items-center md:items-start gap-3">
                 <Mail size={20} className="text-red-500 shrink-0" />
                 <div className="text-center md:text-left">
-                  <p className="text-gray-400 text-sm">contacto@metalbulls.com</p>
+                  <a href="mailto:metalbullsgarage@gmail.com" className="text-gray-400 text-sm hover:text-red-400 transition-colors">
+                    metalbullsgarage@gmail.com
+                  </a>
                 </div>
               </li>
             </ul>
