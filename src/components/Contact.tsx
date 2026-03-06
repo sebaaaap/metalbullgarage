@@ -95,7 +95,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-heading text-lg text-white mb-1 uppercase">WHATSAPP</h4>
-                  <p className="text-gray-400">+56 9 1234 5678</p>
+                  <p className="text-gray-400">+56 9 6830 5358</p>
                 </div>
               </div>
 

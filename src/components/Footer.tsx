@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Facebook, Instagram, Phone, Mail, MapPin } from "lucide-react";
+import { Instagram, Phone, Mail, MapPin } from "lucide-react";
 
 const footerLinks = {
   servicios: [
@@ -41,7 +41,7 @@ export default function Footer() {
             </div>
           </a>
           <p className="font-heading text-2xl sm:text-3xl mb-6 tracking-wider">
-            <span className="text-white">META BULL</span>{" "}
+            <span className="text-white">METAL BULLS</span>{" "}
             <span className="text-red-600">GARAGE</span>
           </p>
 
@@ -50,11 +50,12 @@ export default function Footer() {
           </p>
 
           <div className="flex gap-4">
-            <a href="#" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-600 hover:border-red-600 hover:-translate-y-1 transition-all duration-300 shadow-lg">
+            <a href="https://www.instagram.com/metalbullsgarage" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Metal Bulls Garage" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-600 hover:border-red-600 hover:-translate-y-1 transition-all duration-300 shadow-lg">
               <Instagram size={20} />
             </a>
-            <a href="#" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-600 hover:border-red-600 hover:-translate-y-1 transition-all duration-300 shadow-lg">
-              <Facebook size={20} />
+            {/* TikTok - icono SVG custom ya que lucide no lo tiene */}
+            <a href="https://www.tiktok.com/@metalbullsgarage" target="_blank" rel="noopener noreferrer" aria-label="TikTok de Metal Bulls Garage" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-600 hover:border-red-600 hover:-translate-y-1 transition-all duration-300 shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z" /></svg>
             </a>
           </div>
         </div>
@@ -112,7 +113,7 @@ export default function Footer() {
               <li className="flex flex-col md:flex-row items-center md:items-start gap-3">
                 <Phone size={20} className="text-red-500 shrink-0" />
                 <div className="text-center md:text-left">
-                  <p className="text-gray-400 text-sm">+56 9 1234 5678</p>
+                  <p className="text-gray-400 text-sm">+56 9 6830 5358</p>
                 </div>
               </li>
               <li className="flex flex-col md:flex-row items-center md:items-start gap-3">
