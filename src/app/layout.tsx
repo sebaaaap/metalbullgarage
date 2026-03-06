@@ -15,23 +15,89 @@ const oswald = Oswald({
     display: "swap",
 });
 
+export const viewport = {
+    themeColor: "#dc2626", // Red 600
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+};
+
 export const metadata: Metadata = {
-    title: "Meta Bull Garage | Servicio Mecánico Profesional",
+    metadataBase: new URL('https://metalbullsgarage.cl'), // Mención base asumiendo un dominio ideal (cambiar al real en producción)
+    title: {
+        default: "Metal Bulls Garage | Taller Mecánico Especializado en Quilicura",
+        template: "%s | Metal Bulls Garage",
+    },
     description:
-        "Taller mecánico profesional con más de 10 años de experiencia. Neumáticos, llantas, mecánica general, frenos, suspensión, sistema eléctrico y más. Calidad garantizada.",
-    keywords:
-        "taller mecánico, mecánica automotriz, servicio mecánico, reparación de autos, neumáticos",
+        "Taller mecánico profesional en Quilicura con más de 10 años de experiencia. Especialistas en mecánica general, neumáticos, frenos, mantenciones por kilometraje, escáner automotriz y suspensión. Tu vehículo en las mejores manos.",
+    keywords: [
+        "taller mecánico", "mecánica automotriz", "servicio mecánico Quilicura",
+        "reparación de autos", "neumáticos", "frenos", "cambio de aceite",
+        "mantención automotriz", "taller en Quilicura", "Metal Bulls", "Metal Bulls Garage"
+    ],
+    authors: [{ name: "Metal Bulls Garage" }],
+    creator: "Metal Bulls Garage",
+    publisher: "Metal Bulls Garage",
+    formatDetection: {
+        email: false,
+        address: false,
+        telephone: false,
+    },
+    alternates: {
+        canonical: "/",
+        languages: {
+            "es-CL": "/",
+        },
+    },
+    robots: {
+        index: true,
+        follow: true,
+        nocache: false,
+        googleBot: {
+            index: true,
+            follow: true,
+            noimageindex: false,
+            "max-video-preview": -1,
+            "max-image-preview": "large",
+            "max-snippet": -1,
+        },
+    },
     icons: {
-        icon: "/metabulllogo.png",
+        icon: [
+            { url: "/metabulllogo.png", sizes: "32x32" },
+            { url: "/metabulllogo.png", sizes: "192x192" },
+            { url: "/metabulllogo.png", sizes: "512x512" },
+        ],
         shortcut: "/metabulllogo.png",
         apple: "/metabulllogo.png",
     },
     openGraph: {
-        title: "Meta Bull Garage | Servicio Mecánico Profesional",
+        title: "Metal Bulls Garage | Taller Mecánico Especializado en Quilicura",
         description:
-            "Servicio mecánico profesional con la fuerza y precisión de un toro. Tu vehículo en las mejores manos.",
+            "Servicio mecánico profesional con la fuerza y precisión de un toro. Mantenciones, frenos, mecánica general y más en Quilicura.",
+        url: "https://metalbullsgarage.cl",
+        siteName: "Metal Bulls Garage",
+        locale: "es_CL",
         type: "website",
+        images: [
+            {
+                url: "/metabulllogo.png", // Sugerencia: idealmente una imagen ancha o foto del taller 1200x630
+                width: 800,
+                height: 800,
+                alt: "Logo de Metal Bulls Garage",
+            },
+        ],
     },
+    twitter: {
+        card: "summary_large_image",
+        title: "Metal Bulls Garage | Mecánica Automotriz",
+        description: "Tu vehículo en las mejores manos. Taller especializado en Quilicura.",
+        images: ["/metabulllogo.png"],
+    },
+    verification: {
+        google: "añadir-codigo-de-google-search-console-aqui", // Opcional, util para SEO Técnico
+    },
+    category: "Automotive",
 };
 
 export default function RootLayout({
