@@ -4,22 +4,22 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 const brands = [
-    { src: "/marcas/cas.svg", alt: "Castrol", name: "Castrol" },
-    { src: "/marcas/miche.png", alt: "Michelin", name: "Michelin" },
-    { src: "/marcas/mo1.png", alt: "Mobil 1", name: "Mobil 1" },
-    { src: "/marcas/moly.svg", alt: "Molykote", name: "Molykote" },
-    { src: "/marcas/mot.png", alt: "Motorcraft", name: "Motorcraft" },
-    { src: "/marcas/she.png", alt: "Shell", name: "Shell" },
-    { src: "/marcas/autel.png", alt: "Autel", name: "Autel" },
-    { src: "/marcas/flex.png", alt: "Flex", name: "Flex" },
-    { src: "/marcas/vipal.png", alt: "Vipal", name: "Vipal" },
-    { src: "/marcas/wurth.png", alt: "Würth", name: "Würth" },
-    { src: "/marcas/launch.png", alt: "Launch", name: "Launch" },
-    { src: "/marcas/carplus.png", alt: "Carplus", name: "Carplus" },
+    { src: "/marcas/cas.svg", alt: "Castrol" },
+    { src: "/marcas/miche.png", alt: "Michelin" },
+    { src: "/marcas/mo1.png", alt: "Mobil 1" },
+    { src: "/marcas/moly.svg", alt: "Molykote" },
+    { src: "/marcas/mot.png", alt: "Motorcraft" },
+    { src: "/marcas/she.png", alt: "Shell" },
+    { src: "/marcas/autel.png", alt: "Autel" },
+    { src: "/marcas/flex.png", alt: "Flex" },
+    { src: "/marcas/vipal.png", alt: "Vipal" },
+    { src: "/marcas/wurth.png", alt: "Würth" },
+    { src: "/marcas/launch.png", alt: "Launch" },
+    { src: "/marcas/carplus.png", alt: "Carplus" },
 ];
 
-// Duplicamos para loop infinito sin cortes
-const track = [...brands, ...brands, ...brands];
+// 2 copias exactas — el keyframe mueve -50%, siempre pixel-perfect sin saltos
+const track = [...brands, ...brands];
 
 export default function Brands() {
     return (
@@ -28,7 +28,22 @@ export default function Brands() {
             className="py-20 relative overflow-hidden"
             style={{ background: "linear-gradient(180deg, hsl(0,0%,4%) 0%, hsl(0,0%,6%) 100%)" }}
         >
-            {/* Línea superior decorativa */}
+            {/* CSS keyframe inyectado — técnica más fiable para marquee infinito */}
+            <style>{`
+                @keyframes marquee {
+                    0%   { transform: translateX(0); }
+                    100% { transform: translateX(-50%); }
+                }
+                .marquee-track {
+                    animation: marquee 30s linear infinite;
+                    will-change: transform;
+                }
+                .marquee-track:hover {
+                    animation-play-state: paused;
+                }
+            `}</style>
+
+            {/* Líneas decorativas */}
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-600/40 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/5 to-transparent" />
 
@@ -72,26 +87,22 @@ export default function Brands() {
             {/* Carrusel infinito */}
             <div className="relative">
                 {/* Fade masks a los costados */}
-                <div className="absolute left-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
-                    style={{ background: "linear-gradient(to right, hsl(0,0%,4%), transparent)" }} />
-                <div className="absolute right-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
-                    style={{ background: "linear-gradient(to left, hsl(0,0%,4%), transparent)" }} />
+                <div
+                    className="absolute left-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
+                    style={{ background: "linear-gradient(to right, hsl(0,0%,4%), transparent)" }}
+                />
+                <div
+                    className="absolute right-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
+                    style={{ background: "linear-gradient(to left, hsl(0,0%,4%), transparent)" }}
+                />
 
-                {/* Track animado */}
+                {/* Track — CSS puro garantiza loop sin saltos */}
                 <div className="overflow-hidden">
-                    <motion.div
-                        className="flex gap-16 items-center"
-                        animate={{ x: ["0%", "-33.33%"] }}
-                        transition={{
-                            ease: "linear",
-                            duration: 22,
-                            repeat: Infinity,
-                        }}
-                    >
+                    <div className="marquee-track flex gap-16 items-center w-max">
                         {track.map((brand, i) => (
                             <div
                                 key={`${brand.alt}-${i}`}
-                                className="flex-shrink-0 group flex flex-col items-center gap-3"
+                                className="flex-shrink-0 group flex items-center justify-center"
                             >
                                 <div className="relative w-28 h-20 sm:w-36 sm:h-24 grayscale group-hover:grayscale-0 opacity-50 group-hover:opacity-100 transition-all duration-500">
                                     <Image
@@ -103,7 +114,7 @@ export default function Brands() {
                                 </div>
                             </div>
                         ))}
-                    </motion.div>
+                    </div>
                 </div>
             </div>
         </section>
