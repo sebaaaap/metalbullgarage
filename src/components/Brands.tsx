@@ -14,6 +14,7 @@ const brands = [
     { src: "/marcas/flex.png", alt: "Flex", name: "Flex" },
     { src: "/marcas/vipal.png", alt: "Vipal", name: "Vipal" },
     { src: "/marcas/wurth.png", alt: "Würth", name: "Würth" },
+    { src: "/marcas/launch.png", alt: "Launch", name: "Launch" },
 ];
 
 // Duplicamos para loop infinito sin cortes
