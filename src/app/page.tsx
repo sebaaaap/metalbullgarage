@@ -8,9 +8,13 @@ import Brands from "@/components/Brands";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import { client } from "@/sanity/lib/client";
+
+export const revalidate = 60;
 
 export default async function Home() {
     const googlePlaceData = await getGoogleReviews();
+    const businessInfo = await client.fetch(`*[_type == "businessInfo"][0]`) || {};
 
     // LocalBusiness Schema.org Configuración
     const jsonLd = {
@@ -19,12 +23,10 @@ export default async function Home() {
         "name": "Metal Bulls Garage",
         "image": "https://metalbullsgarage.cl/metabulllogo.png",
         "url": "https://metalbullsgarage.cl",
-        "telephone": "+56912345678",
+        "telephone": businessInfo.phone || "+56912345678",
         "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Santa Luisa 173",
-            "addressLocality": "Quilicura",
-            "addressRegion": "Región Metropolitana",
+            "streetAddress": businessInfo.address || "Santa Luisa 173, Quilicura, Región Metropolitana",
             "addressCountry": "CL"
         },
         "geo": {
@@ -68,9 +70,9 @@ export default async function Home() {
             <About />
             <Testimonials apiData={googlePlaceData} />
             <Brands />
-            <Contact />
-            <Footer />
-            <WhatsAppButton />
+            <Contact businessInfo={businessInfo} />
+            <Footer businessInfo={businessInfo} />
+            <WhatsAppButton businessInfo={businessInfo} />
 
             {/* JSON-LD Schema.org para LocalBusiness Automatizado (SEO Técnico Premium) */}
             <script

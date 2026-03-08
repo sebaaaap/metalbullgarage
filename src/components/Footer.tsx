@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import { Instagram, Phone, Mail, MapPin } from "lucide-react";
 
@@ -18,7 +16,7 @@ const footerLinks = {
   ],
 };
 
-export default function Footer() {
+export default function Footer({ businessInfo }: { businessInfo?: any }) {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -50,11 +48,15 @@ export default function Footer() {
           </p>
 
           <div className="flex gap-4">
-            <a href="https://www.instagram.com/metalbullsgarage" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Metal Bulls Garage" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-600 hover:border-red-600 hover:-translate-y-1 transition-all duration-300 shadow-lg">
+            {businessInfo?.socialLinks?.facebook && (
+              <a href={businessInfo.socialLinks.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-600 hover:border-red-600 hover:-translate-y-1 transition-all duration-300 shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" /></svg>
+              </a>
+            )}
+            <a href={businessInfo?.socialLinks?.instagram || "https://www.instagram.com/metalbullsgarage"} target="_blank" rel="noopener noreferrer" aria-label="Instagram de Metal Bulls Garage" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-600 hover:border-red-600 hover:-translate-y-1 transition-all duration-300 shadow-lg">
               <Instagram size={20} />
             </a>
-            {/* TikTok - icono SVG custom ya que lucide no lo tiene */}
-            <a href="https://www.tiktok.com/@metalbullsgarage" target="_blank" rel="noopener noreferrer" aria-label="TikTok de Metal Bulls Garage" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-600 hover:border-red-600 hover:-translate-y-1 transition-all duration-300 shadow-lg">
+            <a href={businessInfo?.socialLinks?.tiktok || "https://www.tiktok.com/@metalbullsgarage"} target="_blank" rel="noopener noreferrer" aria-label="TikTok de Metal Bulls Garage" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-600 hover:border-red-600 hover:-translate-y-1 transition-all duration-300 shadow-lg">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z" /></svg>
             </a>
           </div>
@@ -106,21 +108,20 @@ export default function Footer() {
               <li className="flex flex-col md:flex-row items-center md:items-start gap-3">
                 <MapPin size={20} className="text-red-500 shrink-0" />
                 <div className="text-center md:text-left">
-                  <p className="text-gray-400 text-sm">Santa Luisa 173, Quilicura</p>
-                  <p className="text-gray-400 text-sm">Región Metropolitana</p>
+                  <p className="text-gray-400 text-sm">{businessInfo?.address || "Santa Luisa 173, Quilicura, Región Metropolitana"}</p>
                 </div>
               </li>
               <li className="flex flex-col md:flex-row items-center md:items-start gap-3">
                 <Phone size={20} className="text-red-500 shrink-0" />
                 <div className="text-center md:text-left">
-                  <p className="text-gray-400 text-sm">+56 9 6830 5358</p>
+                  <p className="text-gray-400 text-sm">{businessInfo?.phone || "+56 9 6830 5358"}</p>
                 </div>
               </li>
               <li className="flex flex-col md:flex-row items-center md:items-start gap-3">
                 <Mail size={20} className="text-red-500 shrink-0" />
                 <div className="text-center md:text-left">
-                  <a href="mailto:metalbullsgarage@gmail.com" className="text-gray-400 text-sm hover:text-red-400 transition-colors">
-                    metalbullsgarage@gmail.com
+                  <a href={businessInfo?.email ? `mailto:${businessInfo.email}` : "mailto:metalbullsgarage@gmail.com"} className="text-gray-400 text-sm hover:text-red-400 transition-colors">
+                    {businessInfo?.email || "metalbullsgarage@gmail.com"}
                   </a>
                 </div>
               </li>

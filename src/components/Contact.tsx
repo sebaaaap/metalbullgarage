@@ -5,7 +5,7 @@ import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { services } from "./Services";
 
-export default function Contact() {
+export default function Contact({ businessInfo }: { businessInfo?: any }) {
   const [formData, setFormData] = useState({
     name: "",
     brand: "",
@@ -85,7 +85,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-heading text-lg text-white mb-1 uppercase">UBICACIÓN</h4>
-                  <p className="text-gray-400">Santa Luisa 173, Quilicura, Región Metropolitana</p>
+                  <p className="text-gray-400">{businessInfo?.address || "Santa Luisa 173, Quilicura, Región Metropolitana"}</p>
                 </div>
               </div>
 
@@ -95,7 +95,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-heading text-lg text-white mb-1 uppercase">WHATSAPP</h4>
-                  <p className="text-gray-400">+56 9 6830 5358</p>
+                  <p className="text-gray-400">{businessInfo?.whatsapp || "+56 9 6830 5358"}</p>
                 </div>
               </div>
 
@@ -105,7 +105,13 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-heading text-lg text-white mb-1 uppercase">HORARIO</h4>
-                  <p className="text-gray-400">Lun - Vie: 9:00 - 19:00 | Sáb: 9:00 - 14:00</p>
+                  {businessInfo?.schedule?.length > 0 ? (
+                    businessInfo.schedule.map((sch: any, i: number) => (
+                      <p key={i} className="text-gray-400">{sch.days}: {sch.hours}</p>
+                    ))
+                  ) : (
+                    <p className="text-gray-400">Lun - Vie: 9:00 - 19:00 | Sáb: 9:00 - 14:00</p>
+                  )}
                 </div>
               </div>
             </div>

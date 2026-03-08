@@ -3,8 +3,9 @@
 import { motion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 
-export default function WhatsAppButton() {
-  const phoneNumber = "56968305358";
+export default function WhatsAppButton({ businessInfo }: { businessInfo?: any }) {
+  const rawPhone = businessInfo?.whatsapp || "56968305358";
+  const phoneNumber = String(rawPhone).replace(/\D/g, "");
   const message = encodeURIComponent("¡Hola! Me gustaría solicitar una cotización para mi vehículo.");
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 
